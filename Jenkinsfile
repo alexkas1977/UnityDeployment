@@ -9,7 +9,7 @@ node("docker") {
     
         stage "build"
 #        def app = docker.build "db"
-	sh build.sh
+	sh "build.sh"
     
         stage "publish"
         app.push 'master'
