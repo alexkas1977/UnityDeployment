@@ -1,5 +1,5 @@
 node("docker") {
-    docker.withRegistry('http://192.168.32.51:5000', '') {
+    docker.withRegistry('http://13.56.14.147:5000', '') {
     
         git url: "https://github.com/alexkas1977/UnityDeployment.git", credentialsId: ''
     

@@ -1,0 +1,32 @@
+version: '2'
+services:
+  application:
+    image: "registry.cmlatitude.com:443/vixtera/unity-app:latest"
+    ports:
+     - "8080:8080"
+    depends_on:
+     - database
+     - nexus
+    environment:
+     - DB_URL="database:3306/unity"
+    volumes:
+     - ./application:/opt/unity/tomcat/conf
+  database:
+    image: "registry.cmlatitude.com:443/vixtera/unity-db:latest"
+    ports:
+     - "3306:3306"
+    volumes:
+     - ./database:/var/lib/mysql
+  nexus:
+    image: "registry.cmlatitude.com:443/vixtera/unity-nexus:latest"
+    ports:
+     - "8081:8081"
+    volumes:
+     - ./sonatype-work:/opt/sonatype-work
+#  cli:
+#    image: "base/unitycli"
+#    environment:
+#     - UNITY_USERNAME=admin
+#     - UNITY_PASSWORD=admin
+#     - UNITY_URL=http://application
+
