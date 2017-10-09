@@ -8,7 +8,7 @@ node("docker") {
         println commit_id
     
         stage "build"
-#        def app = docker.build "db"
+        def app = docker.build "db"
 	sh "build.sh"
     
         stage "publish"
