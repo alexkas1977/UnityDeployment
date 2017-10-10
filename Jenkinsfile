@@ -8,11 +8,11 @@ withDockerRegistry([url: 'http://54.67.11.102:5000']) {
         println commit_id
     
         stage "build"
-	sh 'sudo docker build -t db .'
+	def app = docker.build("db")
     
         stage "publish"
-        app.push 'master'
-        app.push "${commit_id}"
+        app.push ()
+        app.push ('latest')
     }
 }
 
