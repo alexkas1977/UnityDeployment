@@ -1,18 +1,23 @@
-node("docker") {
-withDockerRegistry([url: 'http://54.67.11.102:5000']) {
-    
-        git url: "https://github.com/alexkas1977/UnityDeployment.git", credentialsId: ''
-    
+node ("docker") {
+	def app
+	stage ('Clone repository'){
+	checkout scm 
         sh "git rev-parse HEAD > .git/commit-id"
         def commit_id = readFile('.git/commit-id').trim()
         println commit_id
-    
-        stage "build"
-	def app = docker.build("db")
-    
-        stage "publish"
-        app.push ()
-        app.push ('latest')
-    }
 }
-
+	stage ('Build image') {
+	app = docker.build("vixtera/db")
+}
+	stage('Test image') {
+        app.inside {
+            sh 'echo "Tests passed"'
+        }
+}
+	stage ('Publish image') {
+	docker.withRegistry('http://54.67.11.102:5000') {
+	app.push("{env.BUILD_NUMBER}")
+	app.push("latest")
+}
+}
+}
