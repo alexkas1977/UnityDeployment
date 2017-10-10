@@ -11,7 +11,7 @@ node ("docker") {
 }
 	stage('Test image') {
         app.inside {
-            sh 'echo "Tests passed"'
+            sh 'echo "Tests passed right now"'
         }
 }
 	stage ('Publish image') {
